@@ -2,7 +2,7 @@ import { Dimensions, StyleSheet } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
-export const register_styles = StyleSheet.create({
+export default StyleSheet.create({
   top: {
       flex: 1,
       flexDirection: "row",
@@ -42,47 +42,12 @@ export const register_styles = StyleSheet.create({
   window: {
     width,
     height,
-    marginTop: 30
+    marginTop: 30,
+    backgroundColor: '#F1fafa'
   },
   container: {
     flex: 1,
     backgroundColor: '#F1fafa',
-  },
-  ButtomBlack: {
-        width: 343,
-        height: 52,
-        borderRadius: 10,
-        borderWidth: 2,
-        borderColor: '#000',
-        backgroundColor: '#000',
-        justifyContent: 'center',
-        alignItems: 'center',
-  },
-  ButtomTitleBlack: {
-      fontWeight: 'bold',
-      fontSize: 13,
-      lineHeight: 15,
-      display: 'flex',
-      color: '#fff',
-      alignItems: 'center',
-  },
-  ButtomWhite: {
-        width: 343,
-        height: 52,
-        borderRadius: 10,
-        borderWidth: 2,
-        borderColor: '#000',
-        backgroundColor: '#fff',
-        justifyContent: 'center',
-        alignItems: 'center',
-  },
-  ButtomTitleWhite: {
-      fontWeight: 'bold',
-      fontSize: 13,
-      lineHeight: 15,
-      display: 'flex',
-      color: '#000',
-      borderColor: '#000'
   },
   title: {
         fontSize:50,

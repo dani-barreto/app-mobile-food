@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export const home_styles = StyleSheet.create({
+export default StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
@@ -10,18 +10,6 @@ export const home_styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 10,
     textAlign: 'center',
-  },
-   button: {
-    backgroundColor: '#2E24F4FF', // Cor de fundo personalizada
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 8,
-  },
-  buttonText: {
-    color: 'white', // Cor do texto
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign:'center'
   },
   input: {
     borderWidth: 1,

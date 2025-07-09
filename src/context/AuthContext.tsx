@@ -1,3 +1,4 @@
+// AuthContext.tsx - criado automaticamente
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { User } from '../types/user';
@@ -23,46 +24,31 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function loadStorageData() {
-      const usersJSON = await AsyncStorage.getItem('@iec-food:usuarios');
-      if (!usersJSON) {
-        const defaultUser = { nome: 'Cliente Padrão', email: 'cliente', senha: 'cliente' };
-        await AsyncStorage.setItem('@iec-food:usuarios', JSON.stringify([defaultUser]));
-        console.log("Usuário padrão 'cliente'/'cliente' criado com sucesso!");
-      }
-
-      const savedUser = await AsyncStorage.getItem('@iec-food:user');
+    const loadUserFromStorage = async () => {
+      const savedUser = await AsyncStorage.getItem('@RestauranteApp:user');
       if (savedUser) {
         setUser(JSON.parse(savedUser));
       }
       setLoading(false);
-    }
-    loadStorageData();
+    };
+    loadUserFromStorage();
   }, []);
 
   const login = async (email: string, senha: string): Promise<boolean> => {
-    // ✅ DEPURANDO AQUI DENTRO
     try {
-      console.log('--- DENTRO DA FUNÇÃO LOGIN ---');
-      console.log(`Comparando: Email digitado [${email}] | Senha digitada [${senha}]`);
-
-      const usersJSON = await AsyncStorage.getItem('@iec-food:usuarios');
+      const usersJSON = await AsyncStorage.getItem('@RestauranteApp:usuarios');
       const users: User[] = usersJSON ? JSON.parse(usersJSON) : [];
-
-      console.log('Usuários salvos no dispositivo:', users);
 
       const found = users.find(
         (u) => u.email.toLowerCase() === email.toLowerCase() && u.senha === senha
       );
-      
-      console.log('Resultado da busca (encontrou?):', found ? found : 'Não encontrou');
-      console.log('-----------------------------');
 
       if (found) {
         setUser(found);
-        await AsyncStorage.setItem('@iec-food:user', JSON.stringify(found));
+        await AsyncStorage.setItem('@RestauranteApp:user', JSON.stringify(found));
         return true;
       }
+
       return false;
     } catch (error) {
       console.error('Erro no login:', error);
@@ -72,15 +58,19 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const register = async (userData: Omit<User, 'senha'> & { senha: string }): Promise<boolean> => {
     try {
-      const usersJSON = await AsyncStorage.getItem('@iec-food:usuarios');
+      const usersJSON = await AsyncStorage.getItem('@RestauranteApp:usuarios');
       const users: User[] = usersJSON ? JSON.parse(usersJSON) : [];
+
       const exists = users.some((u) => u.email.toLowerCase() === userData.email.toLowerCase());
       if (exists) return false;
+
       const newUser: User = { ...userData };
       users.push(newUser);
-      await AsyncStorage.setItem('@iec-food:usuarios', JSON.stringify(users));
+
+      await AsyncStorage.setItem('@RestauranteApp:usuarios', JSON.stringify(users));
       setUser(newUser);
-      await AsyncStorage.setItem('@iec-food:user', JSON.stringify(newUser));
+      await AsyncStorage.setItem('@RestauranteApp:user', JSON.stringify(newUser));
+
       return true;
     } catch (error) {
       console.error('Erro ao registrar usuário:', error);
@@ -90,7 +80,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const logout = () => {
     setUser(null);
-    AsyncStorage.removeItem('@iec-food:user');
+    AsyncStorage.removeItem('@RestauranteApp:user');
   };
 
   return (
@@ -101,3 +91,4 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     </AuthContext.Provider>
   );
 };
+ 

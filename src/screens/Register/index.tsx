@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, Text, TextInput, View } from 'react-native';
 import { RadioButton } from 'react-native-paper';
-import Icons from 'react-native-vector-icons/Feather';
-import { register_styles } from '../styles/register_styles';
+import { ThemeButton } from '../../components/Button/Button';
+import styles from './styles';
 
 
 const RegisterScreen: React.FC = ({ navigation }: any) => {
@@ -28,70 +28,69 @@ const RegisterScreen: React.FC = ({ navigation }: any) => {
     }
 
     return (
-        <SafeAreaView style={register_styles.window}>
-            <View style={register_styles.container}>
-                <View style={register_styles.top}>
-                    <TouchableOpacity onPress={handleNavigateBack}>
-                        <Icons name="chevron-left" size={60} color="#000" />
-                    </TouchableOpacity>
-                    <Text style={register_styles.title}>Registro</Text>
-                </View>
-
-                <View style={register_styles.medium}>
+        <SafeAreaView style={styles.window}>
+            <View style={styles.container}>
+                <View style={styles.medium}>
                     <TextInput
-                        style={register_styles.TextInput}
+                        style={styles.TextInput}
                         placeholder="Nome..."
                         onChangeText={setName}
                         value={name}
                     />
                     <TextInput
-                        style={register_styles.TextInput}
+                        style={styles.TextInput}
                         placeholder="Email..."
+                        textContentType='emailAddress'
                         onChangeText={setEmail}
                         value={email}
                     />
                     <TextInput
-                        style={register_styles.TextInput}
-                        placeholder="(31) 98858-8787"
+                        style={styles.TextInput}
+                        placeholder="988588787"
+                        textContentType='telephoneNumber'
                         onChangeText={setNumber}
                         value={number}
                     />
                     <TextInput
-                        style={register_styles.TextInput}
+                        style={styles.TextInput}
                         placeholder="Senha..."
+                        textContentType='password'
                         secureTextEntry={true}
                         onChangeText={setPassword}
                         value={password}
                     />
                     <TextInput
-                        style={register_styles.TextInput}
+                        style={styles.TextInput}
                         placeholder="Confirmação Senha..."
                         secureTextEntry={true}
+                        textContentType='password'
                         onChangeText={setPasswordConfirm}
                         value={passwordConfirm}
                     />
-                    <View style={register_styles.radio}>
+                    <View style={styles.radio}>
                         <RadioButton
                             value="first"
                             status={checked === 'first' ? 'checked' : 'unchecked'}
                             onPress={() => setChecked('first')}
                             color="black"
                         />
-                        <Text style={register_styles.TextRadio}>Cliente</Text>
+                        <Text style={styles.TextRadio}>Cliente</Text>
                         <RadioButton
                             value="second"
                             status={checked === 'second' ? 'checked' : 'unchecked'}
                             onPress={() => setChecked('second')}
                             color="black"
                         />
-                        <Text style={register_styles.TextRadio}>Admin</Text>
+                        <Text style={styles.TextRadio}>Admin</Text>
                     </View>
                 </View>
 
-                <View style={register_styles.bottom}>
-                    <TouchableOpacity style={register_styles.ButtomBlack} onPress={handleNext}>
-                        <Text style={register_styles.ButtomTitleBlack}>Criar Conta</Text>
-                    </TouchableOpacity>
+                <View style={styles.bottom}>
+                    <ThemeButton
+                    title="Criar Conta"
+                    type="black"
+                    onPress={handleNext}
+                    />
                 </View>
             </View>
         </SafeAreaView>
