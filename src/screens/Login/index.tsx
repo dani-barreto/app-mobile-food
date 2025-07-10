@@ -9,15 +9,14 @@ import styles from './styles';
 const LoginScreen: React.FC = ({ navigation }: any) => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const { login } = useAuth();
 
-    const auth = useAuth();
-
-    function handleNavigateBack() {
-        navigation.goBack();
-    }
-
-    async function handleLogin() {
-
+    async function signIn() {
+        const success = await login(email, password);
+        if (success) {
+            navigation.navigate('Home');
+            return;
+        }
     }
 
     return (
@@ -49,7 +48,7 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
                         <ThemeButton
                         title="Entrar"
                         type="black"
-                        onPress={handleLogin}
+                        onPress={signIn}
                         />
                     </View>
                     <View style={styles.AreaSubTitle}>

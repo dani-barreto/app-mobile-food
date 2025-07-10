@@ -4,10 +4,10 @@ import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 
-import HomeScreen from '../screens/Home';
-import LoginScreen from '../screens/Login';
-import RegisterScreen from '../screens/Register';
-import SplashScreen from '../screens/Splash';
+import Home from '../screens/Home';
+import Login from '../screens/Login';
+import Register from '../screens/Register';
+import Splash from '../screens/Splash';
 import { AppStackParamList, AuthStackParamList } from '../types/navigation';
 
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
@@ -27,16 +27,15 @@ export function Routes() {
     <>
       {isAuthenticated ? (
         <AppStack.Navigator id={undefined} >
-          <AppStack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }} />
-          <AppStack.Screen name="HomeScreen" component={HomeScreen} options={{ title: 'Cardápio', headerTitleAlign: 'center' }} />
+          <AppStack.Screen name="Splash" component={Splash} options={{ headerShown: false }} />
+          <AppStack.Screen name="Home" component={Home} options={{ title: 'Cardápio', headerTitleAlign: 'center' }} />
         </AppStack.Navigator>
       ) : (
         <AuthStack.Navigator id={undefined}>
-          <AuthStack.Screen name="Login" component={LoginScreen} />
-          <AuthStack.Screen name="Register" component={RegisterScreen} />
+          <AuthStack.Screen name="Login" component={Login} />
+          <AuthStack.Screen name="Register" component={Register} />
         </AuthStack.Navigator>
       )}
     </>
   );
 }
- 

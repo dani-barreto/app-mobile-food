@@ -1,6 +1,5 @@
 import { ThemeButton } from '@/src/components/Button/Button';
-import { products } from '@/src/types/produto';
-import { restaurants } from '@/src/types/restaurante';
+import { Restaurante, restaurantes } from '@/src/types/restaurante';
 import { Picker } from '@react-native-picker/picker'; // Instale: expo install @react-native-picker/picker
 import React, { useState } from 'react';
 import {
@@ -13,21 +12,30 @@ import styles from './styles';
 
 
 const HomeScreen = () => {
-  const [selectedRestaurant, setSelectedRestaurant] = useState(1);
+  const [selectedRestaurant, setSelectedRestaurant] = useState(restaurantes[0].id);
 
-  const filteredItems = products.filter(item => item.restaurantId === selectedRestaurant);
+  const selectedRest = restaurantes.find((rest: Restaurante) => rest.id === selectedRestaurant);
+  const filteredItems = selectedRest ? selectedRest.produtos : [];
 
   return (
     <View style={styles.container}>
-      <Picker
-        selectedValue={selectedRestaurant}
-        onValueChange={setSelectedRestaurant}
-        style={{ marginBottom: 16, borderColor: '#000', borderWidth: 2, borderRadius: 8 }}
-      >
-        {restaurants.map(rest => (
-          <Picker.Item key={rest.id} label={rest.nome} value={rest.id} />
-        ))}
-      </Picker>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 16 }}>
+        <Picker
+          selectedValue={selectedRestaurant}
+          onValueChange={setSelectedRestaurant}
+          style={{ width: 343, height: 52,flex: 1, borderColor: '#000', borderWidth: 2, borderRadius: 8 }}
+        >
+          {restaurantes.map(rest => (
+        <Picker.Item key={rest.id} label={rest.nome} value={rest.id} />
+          ))}
+        </Picker>
+        <ThemeButton
+          title="+"
+          type="black"
+          onPress={() => { /* ação de adicionar restaurante */ }}
+          style={{ width: 50, height: 50, marginLeft: 8 }}
+        />
+      </View>
 
       <ScrollView>
         {filteredItems.map(item => (

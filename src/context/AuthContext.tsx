@@ -12,6 +12,8 @@ interface AuthContextData {
   loading: boolean;
 }
 
+const STORAGE_KEY = '@authenticatedUser';
+
 export const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 export const useAuth = () => useContext(AuthContext);
 
@@ -25,7 +27,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     const loadUserFromStorage = async () => {
-      const savedUser = await AsyncStorage.getItem('@RestauranteApp:user');
+      const savedUser = await AsyncStorage.getItem(STORAGE_KEY);
       if (savedUser) {
         setUser(JSON.parse(savedUser));
       }
@@ -45,7 +47,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       if (found) {
         setUser(found);
-        await AsyncStorage.setItem('@RestauranteApp:user', JSON.stringify(found));
+        await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(found));
         return true;
       }
 
@@ -69,7 +71,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       await AsyncStorage.setItem('@RestauranteApp:usuarios', JSON.stringify(users));
       setUser(newUser);
-      await AsyncStorage.setItem('@RestauranteApp:user', JSON.stringify(newUser));
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newUser));
 
       return true;
     } catch (error) {
@@ -80,7 +82,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const logout = () => {
     setUser(null);
-    AsyncStorage.removeItem('@RestauranteApp:user');
+    AsyncStorage.removeItem(STORAGE_KEY);
   };
 
   return (

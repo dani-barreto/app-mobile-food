@@ -6,6 +6,6 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
-  HomeScreen: undefined;
-  SplashScreen: undefined;
+  Home: undefined;
+  Splash: undefined;
 };

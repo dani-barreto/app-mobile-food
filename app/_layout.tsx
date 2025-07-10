@@ -1,5 +1,6 @@
 import React from 'react';
 // Ajuste o caminho se o seu 'src' estiver em outro lugar
+import { RestauranteProvider } from '@/src/context/RestauranteContext';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { AuthProvider, useAuth } from '../src/context/AuthContext';
 import { Routes } from '../src/routes';
@@ -26,7 +27,9 @@ export default function RootLayout() {
   return (
     // O AuthProvider agora envolve corretamente toda a aplicação
     <AuthProvider>
-      <RootLayoutNav />
+      <RestauranteProvider>
+          <RootLayoutNav />
+      </RestauranteProvider>
     </AuthProvider>
   );
 }
