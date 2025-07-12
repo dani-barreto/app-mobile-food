@@ -16,6 +16,12 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
             alert('Por favor, preencha todos os campos.');
             return;
         }
+
+        if (email.length < 5 || !email.includes('@') || !email.includes('.')) {
+            Alert.alert('Email inválido', 'Digite um email válido.');
+            return;
+        }
+
         const success = await login(email, password);
         if (success) {
             navigation.navigate('Home');

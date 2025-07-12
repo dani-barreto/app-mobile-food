@@ -31,6 +31,11 @@ const RegisterScreen = ({ navigation }: any) => {
             return;
         }
 
+        if (email.length < 5 || !email.includes('@') || !email.includes('.')) {
+            Alert.alert('Email inválido', 'Digite um email válido.');
+            return;
+        }
+
         if (password !== passwordConfirm) {
             Alert.alert('Erro', 'As senhas não coincidem.');
             return;
