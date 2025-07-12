@@ -1,13 +1,21 @@
+import { useAuth } from '@/src/context/AuthContext';
 import React, { useEffect } from 'react';
 import { Image, Text, View } from 'react-native';
 import styles from './styles';
 
 const SplashScreen = ({ navigation }: any) => {
+
+   const { isAuthenticated, loading } = useAuth();
+
   useEffect(() => {
     setTimeout(() => {
-      navigation.replace('Home');
-    }, 2000);
-  }, []);
+      if (isAuthenticated) {
+        navigation.replace('Home');
+      } else {
+        navigation.replace('Login');
+      }
+    }, 1000);
+  }, [isAuthenticated]);
 
   return (
     <View style={styles.container}>

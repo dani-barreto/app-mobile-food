@@ -1,12 +1,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { ReactNode, createContext, useContext, useEffect, useState } from 'react';
+import { Produto } from '../types/produto';
 import { Restaurante } from '../types/restaurante';
 
 interface RestauranteContextType {
   restaurantes: Restaurante[];
   getRestauranteById: (id: string) => Restaurante | undefined;
   setRestaurantes: (restaurantes: Restaurante[]) => Promise<void>;
-  resetContext: () => Promise<void>; // Adicionado
+  setProdutos: (id_restaurante: string, produtos: Produto[]) => Promise<void>;
+  resetContext: () => Promise<void>;
 }
 
 const STORAGE_KEY = '@restaurantes';
@@ -40,13 +42,21 @@ export const RestauranteProvider = ({ children }: { children: ReactNode }) => {
 
   const getRestauranteById = (id: string) => restaurantes.find(r => r.id === id);
 
+  const setProdutos = async (id_restaurante: string, produtos: Produto[]) => {
+    const novosRestaurantes = restaurantes.map(rest =>
+      rest.id === id_restaurante ? { ...rest, produtos } : rest
+    );
+    setRestaurantesState(novosRestaurantes);
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(novosRestaurantes));
+  };
+
   const resetContext = async () => {
     setRestaurantesState(initialRestaurants);
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(initialRestaurants));
   };
 
   return (
-    <RestauranteContext.Provider value={{ restaurantes, getRestauranteById, setRestaurantes, resetContext }}>
+    <RestauranteContext.Provider value={{ restaurantes, getRestauranteById, setRestaurantes, setProdutos, resetContext }}>
       {children}
     </RestauranteContext.Provider>
   );

@@ -54,6 +54,11 @@ export default StyleSheet.create({
     marginBottom: 12,
     elevation: 2,
   },
+  menuItemselect: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12
+  },
   menuItemLeft: {
     marginRight: 12,
   },
@@ -77,33 +82,22 @@ export default StyleSheet.create({
     color: '#2E24F4FF',
     fontWeight: 'bold',
   },
- ButtomBlack: {
-        width: 343,
-        height: 52,
-        borderRadius: 10,
-        borderWidth: 2,
-        borderColor: '#000',
-        backgroundColor: '#000',
-        justifyContent: 'center',
-        alignItems: 'center',
-  },
   ButtomTitleBlack: {
       fontWeight: 'bold',
       fontSize: 13,
       lineHeight: 15,
-      display: 'flex',
       color: '#fff',
       alignItems: 'center',
+      borderRadius: 8
   },
   ButtomWhite: {
-        width: 343,
-        height: 52,
-        borderRadius: 10,
-        borderWidth: 2,
+        width: '100%',
         borderColor: '#000',
         backgroundColor: '#fff',
-        justifyContent: 'center',
         alignItems: 'center',
+        elevation: 2,
+        borderRadius: 8,
+        borderWidth: 2
   },
   ButtomTitleWhite: {
       fontWeight: 'bold',

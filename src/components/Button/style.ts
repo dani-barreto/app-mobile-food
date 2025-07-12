@@ -30,6 +30,10 @@ ButtomWhite: {
       justifyContent: 'center',
       alignItems: 'center',
 },
+pickerContainer: {
+      borderRadius: 10,
+      overflow: 'hidden',
+},
 ButtomTitleWhite: {
     fontWeight: 'bold',
     fontSize: 13,

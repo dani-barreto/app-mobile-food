@@ -24,12 +24,16 @@ interface AuthProviderProps {
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const loadUserFromStorage = async () => {
       const savedUser = await AsyncStorage.getItem(STORAGE_KEY);
       if (savedUser) {
         setUser(JSON.parse(savedUser));
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
       }
       setLoading(false);
     };
@@ -47,6 +51,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       if (found) {
         setUser(found);
+        setIsAuthenticated(true);
         await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(found));
         return true;
       }
@@ -71,6 +76,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       await AsyncStorage.setItem('@RestauranteApp:usuarios', JSON.stringify(users));
       setUser(newUser);
+      setIsAuthenticated(false);
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newUser));
 
       return true;
@@ -82,15 +88,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const logout = () => {
     setUser(null);
+    setIsAuthenticated(false);
     AsyncStorage.removeItem(STORAGE_KEY);
   };
 
   return (
     <AuthContext.Provider
-      value={{ user, login, register, logout, isAuthenticated: !!user, loading }}
+      value={{ user, login, register, logout, isAuthenticated, loading }}
     >
       {children}
     </AuthContext.Provider>
   );
 };
- 

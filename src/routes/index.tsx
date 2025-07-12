@@ -1,7 +1,7 @@
 // index.tsx - criado automaticamente
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 
 import Home from '../screens/Home';
@@ -14,7 +14,7 @@ const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 const AppStack = createNativeStackNavigator<AppStackParamList>();
 
 export function Routes() {
-    const { isAuthenticated, loading } = useAuth();
+    const { isAuthenticated, loading, user, logout } = useAuth();
 
   if (loading) {
     return (
@@ -28,7 +28,19 @@ export function Routes() {
       {isAuthenticated ? (
         <AppStack.Navigator id={undefined} >
           <AppStack.Screen name="Splash" component={Splash} options={{ headerShown: false }} />
-          <AppStack.Screen name="Home" component={Home} options={{ title: 'Cardápio', headerTitleAlign: 'center' }} />
+          <AppStack.Screen 
+            name="Home" 
+            component={Home} 
+            options={{ 
+              title: user?.nome, 
+              headerTitleAlign: 'center',
+              headerRight: () => (
+                <TouchableOpacity onPress={logout} style={{ marginRight: 10 }}>
+                  <Text style={{ color: '#2563EB', fontWeight: 'bold' }}>Sair</Text>
+                </TouchableOpacity>
+              ),
+            }} 
+          />
         </AppStack.Navigator>
       ) : (
         <AuthStack.Navigator id={undefined}>

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text, TextInput, View } from 'react-native';
+import { Alert, SafeAreaView, Text, TextInput, View } from 'react-native';
 import { RadioButton } from 'react-native-paper';
-import { ThemeButton } from '../../components/Button/Button';
+import { ThemeButton } from '../../components/Button';
 import { useAuth } from '../../context/AuthContext';
 import styles from './styles';
 
 
-const RegisterScreen: React.FC = ({ navigation }: any) => {
+const RegisterScreen = ({ navigation }: any) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [number, setNumber] = useState('');
@@ -15,15 +15,32 @@ const RegisterScreen: React.FC = ({ navigation }: any) => {
     const [checked, setChecked] = useState<'cliente' | 'admin'>('cliente');
 
     const { register } = useAuth();
-
     async function handleCreateUser() {
-        if (!name || !email || !password || !passwordConfirm) return;
-        if (password !== passwordConfirm) return;
+        const missingFields = [];
+        if (!name) missingFields.push('Nome');
+        if (!email) missingFields.push('Email');
+        if (!number) missingFields.push('Telefone');
+        if (!password) missingFields.push('Senha');
+        if (!passwordConfirm) missingFields.push('Confirmação Senha');
+
+        if (missingFields.length > 0) {
+            Alert.alert(
+                'Campos obrigatórios',
+                `Preencha os seguintes campos: ${missingFields.join(', ')}`
+            );
+            return;
+        }
+
+        if (password !== passwordConfirm) {
+            Alert.alert('Erro', 'As senhas não coincidem.');
+            return;
+        }
+
         const tipo: 'cliente' | 'admin' = checked === 'cliente' ? 'cliente' : 'admin';
-        const newUser = { nome: name, email, senha: password, tipo };
+        const newUser = { nome: name, email, telefone: number, senha: password, tipo };
         const success = await register(newUser);
         if (success) {
-            navigation.navigate('Login');
+            navigation.replace('Login');
         }
     }
 
@@ -41,8 +58,9 @@ const RegisterScreen: React.FC = ({ navigation }: any) => {
                         style={styles.TextInput}
                         placeholder="Email..."
                         textContentType='emailAddress'
-                        onChangeText={setEmail}
+                        onChangeText={text => setEmail(text.toLowerCase())}
                         value={email}
+                        autoComplete='email'
                     />
                     <TextInput
                         style={styles.TextInput}
@@ -58,6 +76,8 @@ const RegisterScreen: React.FC = ({ navigation }: any) => {
                         secureTextEntry={true}
                         onChangeText={setPassword}
                         value={password}
+                        autoFocus={true}
+                        autoComplete='password'
                     />
                     <TextInput
                         style={styles.TextInput}
@@ -66,6 +86,8 @@ const RegisterScreen: React.FC = ({ navigation }: any) => {
                         textContentType='password'
                         onChangeText={setPasswordConfirm}
                         value={passwordConfirm}
+                        autoFocus={true}
+                        autoComplete='password'
                     />
                     <View style={styles.radio}>
                         <RadioButton
