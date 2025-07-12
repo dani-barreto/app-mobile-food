@@ -113,6 +113,12 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
 },
+menuItemActions: {
+  flexDirection: 'row',
+  justifyContent: 'flex-end',
+  alignItems: 'center',
+  marginTop: 10,
+},
 });
 
 

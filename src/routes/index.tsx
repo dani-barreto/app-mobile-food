@@ -1,7 +1,7 @@
 // index.tsx - criado automaticamente
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import { useAuth } from '../context/AuthContext';
 
 import Home from '../screens/Home';
@@ -17,17 +17,12 @@ export function Routes() {
     const { isAuthenticated, loading, user, logout } = useAuth();
 
   if (loading) {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color="#2563EB" />
-      </View>
-    );
+    return <Splash />;
   }
   return (
     <>
       {isAuthenticated ? (
-        <AppStack.Navigator id={undefined} >
-          <AppStack.Screen name="Splash" component={Splash} options={{ headerShown: false }} />
+        <AppStack.Navigator>
           <AppStack.Screen 
             name="Home" 
             component={Home} 
@@ -43,7 +38,7 @@ export function Routes() {
           />
         </AppStack.Navigator>
       ) : (
-        <AuthStack.Navigator id={undefined}>
+        <AuthStack.Navigator>
           <AuthStack.Screen name="Login" component={Login} />
           <AuthStack.Screen name="Register" component={Register} />
         </AuthStack.Navigator>

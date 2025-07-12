@@ -14,7 +14,7 @@ const SplashScreen = ({ navigation }: any) => {
       } else {
         navigation.replace('Login');
       }
-    }, 1000);
+    }, 2000);
   }, [isAuthenticated]);
 
   return (

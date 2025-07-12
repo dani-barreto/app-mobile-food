@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, TextInput, View } from 'react-native';
+import { Alert, SafeAreaView, TextInput, View } from 'react-native';
 
 import { ThemeButton } from '../../components/Button';
 import { useAuth } from '../../context/AuthContext';
@@ -37,6 +37,12 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
                             textContentType='emailAddress'
                             keyboardType="email-address"
                             autoComplete='email'
+                            onBlur={() => {
+                                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                                if (email && !emailRegex.test(email)) {
+                                    Alert.alert('Email inválido', 'Digite um email válido.');
+                                }
+                            }}
                         />
                     </View>
                     <View style={styles.TextPadding}>

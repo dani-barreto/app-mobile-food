@@ -61,34 +61,51 @@ const RegisterScreen = ({ navigation }: any) => {
                         onChangeText={text => setEmail(text.toLowerCase())}
                         value={email}
                         autoComplete='email'
-                    />
-                    <TextInput
-                        style={styles.TextInput}
-                        placeholder="988588787"
-                        textContentType='telephoneNumber'
-                        onChangeText={setNumber}
-                        value={number}
-                    />
-                    <TextInput
-                        style={styles.TextInput}
-                        placeholder="Senha..."
-                        textContentType='password'
-                        secureTextEntry={true}
-                        onChangeText={setPassword}
-                        value={password}
-                        autoFocus={true}
-                        autoComplete='password'
-                    />
-                    <TextInput
-                        style={styles.TextInput}
-                        placeholder="Confirmação Senha..."
-                        secureTextEntry={true}
-                        textContentType='password'
-                        onChangeText={setPasswordConfirm}
-                        value={passwordConfirm}
-                        autoFocus={true}
-                        autoComplete='password'
-                    />
+                        onBlur={() => {
+                            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                            if (email && !emailRegex.test(email)) {
+                                Alert.alert('Email inválido', 'Digite um email válido.');
+                            }}}
+                        />
+                        <TextInput
+                            style={styles.TextInput}
+                            placeholder="(99) 99999-9999"
+                            textContentType='telephoneNumber'
+                            onChangeText={text => {
+                                const cleaned = text.replace(/\D/g, '');
+                                let masked = cleaned;
+                                if (masked.length > 2) {
+                                    masked = `(${masked.slice(0, 2)}) ${masked.slice(2)}`;
+                                }
+                                if (masked.length > 9) {
+                                    masked = `${masked.slice(0, 10)}-${masked.slice(10, 14)}`;
+                                }
+                                setNumber(masked);
+                            }}
+                            value={number}
+                            keyboardType="numeric"
+                            maxLength={15}
+                        />
+                        <TextInput
+                            style={styles.TextInput}
+                            placeholder="Senha..."
+                            textContentType='password'
+                            secureTextEntry={true}
+                            onChangeText={setPassword}
+                            value={password}
+                            autoFocus={true}
+                            autoComplete='password'
+                        />
+                        <TextInput
+                            style={styles.TextInput}
+                            placeholder="Confirmação Senha..."
+                            secureTextEntry={true}
+                            textContentType='password'
+                            onChangeText={setPasswordConfirm}
+                            value={passwordConfirm}
+                            autoFocus={true}
+                            autoComplete='password'
+                        />
                     <View style={styles.radio}>
                         <RadioButton
                             value="cliente"
