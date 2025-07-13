@@ -57,7 +57,19 @@ Este repositório contém todo o código-fonte do projeto, bem como os recursos 
 
 ---
 
-**Aluno:** Weverton Ryan Ribeiro da Mata 
+**Alunos:** 
+
+Daniela Barreto
+Gustavo Henrique Cassimiro Moura
+Maxwel Allan Ferreira
+Rafael Hitoshi Yamane
+Weverton Ryan Ribeiro da Mata 
+
 **Curso:**  Arquitetura de Aplicações Móveis
 **Professor:** Fernando Pereira  
 **Entrega Individual - Trabalho Prático: App Mobile - Cardápio de Restaurante**
+
+**Como executar** 
+1. npm install
+2. npx expo start
+3. Realizar  a leitura do QR code no App expo Go
