@@ -1,6 +1,6 @@
 # 🍽️ App Mobile - Cardápio de Restaurante
 
-Este é um projeto desenvolvido como parte do **Trabalho Prático da     disciplina de Aplicações Mobile**. O aplicativo simula o cardápio      digital  de um restaurante, com funcionalidades completas de cadastro, login e gerenciamento de pratos, restaurantes e usuários.
+Este é um projeto desenvolvido como parte do **Trabalho Prático da disciplina de Aplicações Mobile**. O aplicativo simula o cardápio      digital  de um restaurante, com funcionalidades completas de cadastro, login e gerenciamento de pratos, restaurantes e usuários.
 
 ## 📱 Funcionalidades
 
@@ -48,8 +48,7 @@ Este é um projeto desenvolvido como parte do **Trabalho Prático da     discipl
 
 📺 Assista ao vídeo de apresentação do app pelo link abaixo:
 
-🔗 [Link para o vídeo no YouTube](https://youtube.com/seu-video-aqui)  
-*(ou adicione o arquivo de vídeo na pasta do projeto)*
+🔗 [Link para o vídeo no Google Drive](https://drive.google.com/file/d/1cGfGjqkubEZBQIgp1awn3Qa86-FS8-N9/view?usp=drive_link)
 
 ## 🔗 Repositório
 
@@ -59,11 +58,11 @@ Este repositório contém todo o código-fonte do projeto, bem como os recursos 
 
 **Alunos:** 
 
-Daniela Barreto
-Gustavo Henrique Cassimiro Moura
-Maxwel Allan Ferreira
-Rafael Hitoshi Yamane
-Weverton Ryan Ribeiro da Mata 
+Daniela Barreto  
+Gustavo Henrique Cassimiro Moura  
+Maxwel Allan Ferreira  
+Rafael Hitoshi Yamane  
+Weverton Ryan Ribeiro da Mata   
 
 **Curso:**  Arquitetura de Aplicações Móveis
 **Professor:** Fernando Pereira  

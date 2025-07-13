@@ -133,7 +133,7 @@ const HomeScreen = () => {
             <View style={styles.menuItemContent}>
               <Text style={styles.menuItemName}>{item.nome}</Text>
               <Text style={styles.menuItemDescription}>{item.descricao}</Text>
-              <Text>R${Number(item.preco).toFixed(2)}</Text>
+              <Text>R$ {Number((item.preco || '0').toString().replace(',', '.')).toFixed(2)}</Text> 
               {admin && (
                 <View style={styles.menuItemActions}>
                   <ThemeButton
