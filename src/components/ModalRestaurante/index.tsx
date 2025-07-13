@@ -1,5 +1,6 @@
 import { useRestauranteContext } from '@/src/context/RestauranteContext';
 import { Restaurante } from '@/src/types/restaurante';
+import { validarCNPJ } from '@/src/utils/validations';
 import React, { useState } from 'react';
 import { Modal, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
@@ -8,6 +9,16 @@ interface ModalRestauranteProps {
   onClose: () => void;
   onCreated?: (id: string) => void;
   restauranteId?: string;
+}
+
+function formatarCNPJ(value: string): string {
+  const cnpj = value.replace(/\D/g, ''); // Remove tudo que não for número
+
+  if (cnpj.length <= 2) return cnpj;
+  if (cnpj.length <= 5) return `${cnpj.slice(0, 2)}.${cnpj.slice(2)}`;
+  if (cnpj.length <= 8) return `${cnpj.slice(0, 2)}.${cnpj.slice(2, 5)}.${cnpj.slice(5)}`;
+  if (cnpj.length <= 12) return `${cnpj.slice(0, 2)}.${cnpj.slice(2, 5)}.${cnpj.slice(5, 8)}/${cnpj.slice(8)}`;
+  return `${cnpj.slice(0, 2)}.${cnpj.slice(2, 5)}.${cnpj.slice(5, 8)}/${cnpj.slice(8, 12)}-${cnpj.slice(12, 14)}`;
 }
 
 const ModalRestaurante: React.FC<ModalRestauranteProps> = ({ visible, onClose, onCreated, restauranteId }) => {
@@ -42,7 +53,18 @@ const ModalRestaurante: React.FC<ModalRestauranteProps> = ({ visible, onClose, o
   }, [visible, restauranteId]);
 
   const handleSave = async () => {
-    if (!novoRestaurante.nome || !novoRestaurante.endereco || !novoRestaurante.cnpj) return;
+    const { nome, endereco, cnpj } = novoRestaurante;
+
+    if (!nome || !endereco || !cnpj) {
+      alert('Preencha todos os campos obrigatórios.');
+      return;
+    }
+
+    if (!validarCNPJ(cnpj)) {
+      alert('CNPJ inválido. Verifique o número digitado.');
+      return;
+    }
+
     if (restauranteId) {
       const novosRestaurantes = restaurantes.map(rest =>
         rest.id === restauranteId ? { ...rest, ...novoRestaurante } : rest
@@ -83,7 +105,17 @@ const ModalRestaurante: React.FC<ModalRestauranteProps> = ({ visible, onClose, o
           )}
           <TextInput placeholder="Nome" value={novoRestaurante.nome} onChangeText={v => setNovoRestaurante(r => ({ ...r, nome: v }))} style={{ borderBottomWidth: 1, marginBottom: 8 }} />
           <TextInput placeholder="Endereço" value={novoRestaurante.endereco} onChangeText={v => setNovoRestaurante(r => ({ ...r, endereco: v }))} style={{ borderBottomWidth: 1, marginBottom: 8 }} />
-          <TextInput placeholder="CNPJ" value={novoRestaurante.cnpj} onChangeText={v => setNovoRestaurante(r => ({ ...r, cnpj: v }))} style={{ borderBottomWidth: 1, marginBottom: 8 }} />
+          <TextInput
+            placeholder="CNPJ"
+            keyboardType="numeric"
+            value={novoRestaurante.cnpj}
+            onChangeText={v => {
+              const cnpjFormatado = formatarCNPJ(v);
+              setNovoRestaurante(r => ({ ...r, cnpj: cnpjFormatado }));
+            }}
+            maxLength={18}
+            style={{ borderBottomWidth: 1, marginBottom: 8 }}
+          />
           <TextInput placeholder="Latitude" value={novoRestaurante.latitude} onChangeText={v => setNovoRestaurante(r => ({ ...r, latitude: v }))} style={{ borderBottomWidth: 1, marginBottom: 8 }} />
           <TextInput placeholder="Longitude" value={novoRestaurante.longitude} onChangeText={v => setNovoRestaurante(r => ({ ...r, longitude: v }))} style={{ borderBottomWidth: 1, marginBottom: 8 }} />
           <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: 10 }}>
